@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="-1" 
 import tensorflow as tf
 import Config
 from tools import _get_data, _get_conf, get_label,auc_score
@@ -237,6 +239,7 @@ class xDeepFM(object):
         final_result = []
         final_len = 0
         field_nums = [self.field_size]
+        print('  ++++++++ ++++ field_size:', self.field_size, 'embsize:', Config.embedding_size)
         if Config.multi_features:
             nn_input = tf.reshape(tf.concat([second_single_result, second_multi_result], axis=1),
                                   shape=[-1, self.field_size, Config.embedding_size])
@@ -311,7 +314,8 @@ class xDeepFM(object):
 
     def _train(self):
         print('....')
-        with tf.Session() as self.sess:
+        with tf.Session(config=tf.ConfigProto(device_count={'GPU': 0})) as self.sess:
+        #with tf.Session() as self.sess:
             self.sess.run(tf.global_variables_initializer())
             allDataLength = len(self.train)
             global_step = 0

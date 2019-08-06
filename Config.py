@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 """
     author : yang yiqing 2018年07月13日15:57:50
 """
@@ -28,7 +29,8 @@ multi_feature_frequency = 0
 
 FM_layer = True
 DNN_layer = True
-CIN_layer = False
+#CIN_layer = False
+CIN_layer = True
 
 use_numerical_embedding = False
 
